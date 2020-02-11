@@ -1,5 +1,4 @@
 import boto3
-
 ec2 = boto3.client('ec2')
 
 # Retrieves all regions/endpoints that work with EC2
@@ -10,6 +9,7 @@ ec2 = boto3.client('ec2')
 #response = ec2.describe_availability_zones()
 #print('Availability Zones:', response['AvailabilityZones'])
 
-response = ec2.describe_instance_type_offerings()
+response = ec2.describe_instance_type_offerings(
+    LocationType='us-east-1d')
 print('Instance Type Offerings: ')
 print(response)
