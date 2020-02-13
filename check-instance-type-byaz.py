@@ -61,10 +61,10 @@ response = ec2.describe_instance_type_offerings(
 )
 
 outputs = response[u'InstanceTypeOfferings']
+print(instancetype + " available in following Availability Zones:")
 for output in outputs:
-    InstanceType = output['InstanceType']
     Loc = output['Location']
-    print(InstanceType + " in " + Loc)
+    print(Loc)
 
 #print('Instance Type Offerings: ')
 #pprint(response)
