@@ -59,5 +59,12 @@ response = ec2.describe_instance_type_offerings(
         }
     ]
 )
-print('Instance Type Offerings: ')
-pprint(response)
+
+outputs = response[u'InstanceTypeOfferings']
+for output in outputs:
+    InstanceType = output['InstanceType']
+    Loc = output['Location']
+    print(InstanceType + " in " + Loc)
+
+#print('Instance Type Offerings: ')
+#pprint(response)
