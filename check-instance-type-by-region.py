@@ -24,13 +24,18 @@ argv = sys.argv[1:]
 
 try:
     opts, args = getopt.getopt(
-        argv, "hi:r:", ["instancetype=", "region="])
+        argv, "h:i:r", ["instancetype=", "region="])
 except getopt.GetoptError:
-    print('check-instance-type-availability.py -i <instancetype> -r <region>')
+    print('check-instance-type-availability.py --instancetype <instancetype> --region <region>')
+    sys.exit(2)
+if not args:
+    print("Use following parameters to run script")
+    print('check-instance-type-availability.py --instancetype "t3.medium" --region "us-east-1')
     sys.exit(2)
 for opt, arg in opts:
     if opt == '-h':
-        print('check-instance-type-availability.py -i <instancetype> -r <region>')
+        print("Use following parameters to run script")
+        print('check-instance-type-availability.py --instancetype "t3.medium" --region "us-east-1')
         sys.exit()
     elif opt in ("-i", "--instancetype"):
         instancetype = arg
