@@ -28,7 +28,7 @@ try:
 except getopt.GetoptError:
     print('check-instance-type-availability.py --instancetype <instancetype> --region <region>')
     sys.exit(2)
-if not args:
+if not argv:
     print("Use following parameters to run script")
     print('check-instance-type-availability.py --instancetype "t3.medium" --region "us-east-1')
     sys.exit(2)
