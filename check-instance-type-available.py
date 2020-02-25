@@ -32,6 +32,8 @@ args = parser.parse_args()
 az = args.az
 instancetype = args.instancetype
 
+# It looks like the AZ Location is not filtering the response, so the payload has a list of all AZs where the instance is available.
+# This results in a double filter later in the script.
 response = ec2.describe_instance_type_offerings(
     DryRun=False,
     LocationType='availability-zone',
@@ -49,13 +51,17 @@ response = ec2.describe_instance_type_offerings(
     ],
 )
 
+# Conver the DICT to a LIST
 instanceofferings = response['InstanceTypeOfferings']
 
+# Populate a list to search. Because the filter in the describe_instance_type_offerings call
+# Does not seem to work, a second logic check is required.
 instancelist = []
 for i in instanceofferings:
-    instancelist.append(i['InstanceType'])
+    if i['Location'] == az:
+        instancelist.append(i['InstanceType'])
 
-if 't4.micro' in instancelist:
+if instancetype in instancelist:
     print('Yes')
 else:
     print('No')
