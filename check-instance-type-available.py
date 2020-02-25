@@ -13,8 +13,8 @@ TODO: parameterize the command inputs.
 TODO: variables in the Filter of describe_instance_type_offerings
 TODO: search the response for the correspond instance type.
 """
-from botocore.exceptions import ClientError
 from boto3 import Session
+from botocore.exceptions import ClientError
 import argparse
 
 sess = Session(profile_name='default', region_name='us-east-1')
@@ -40,5 +40,14 @@ response = ec2.describe_instance_type_offerings(
         },
     ],
 )
-print('Instance Type Offerings: ')
-print(response)
+
+instanceofferings = response['InstanceTypeOfferings']
+
+instancelist = []
+for i in instanceofferings:
+    instancelist.append(i['InstanceType'])
+
+if 't4.micro' in instancelist:
+    print('Yes')
+else:
+    print('No')
