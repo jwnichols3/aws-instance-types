@@ -32,11 +32,12 @@ args = parser.parse_args()
 az = args.az
 instancetype = args.instancetype
 region = args.region
+profile = args.profile
 
 if not (region):
     region = 'us-east-1'
 
-sess = Session(profile_name='default', region_name=region)
+sess = Session(profile_name=profile, region_name=region)
 ec2 = sess.client('ec2')
 
 # It looks like the AZ Location is not filtering the response, so the payload has a list of all AZs where the instance is available.
