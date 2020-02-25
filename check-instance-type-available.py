@@ -20,13 +20,17 @@ import argparse
 sess = Session(profile_name='default', region_name='us-east-1')
 ec2 = sess.client('ec2')
 
-parser = argparse.ArgumentParser(
-    description='Return true or false if an instance type is available in a specific availability zone')
-parser.add_argument('--az', '-a', help='Specific availability zone')
-parser.add_argument('--instancetype', '-i',
+parser = argparse.ArgumentParser(prog='PROG',
+                                 description='Return true or false if an instance type is available in a specific availability zone')
+parser.add_argument('--az', default='us-east-1a',
+                    help='Specific availability zone')
+parser.add_argument('--instancetype', '-i', default='t2.micro',
                     help='Specific instance type, e.g. t2.micro')
 parser.add_argument('--profile', '-p', help='AWS Profile name')
 
+args = parser.parse_args()
+az = args.az
+instancetype = args.instancetype
 
 response = ec2.describe_instance_type_offerings(
     DryRun=False,
@@ -35,7 +39,11 @@ response = ec2.describe_instance_type_offerings(
         {
             'Name': 'location',
             'Values': [
-                'us-east-1d',
+                az,
+            ],
+            'Name': 'instance-type',
+            'Values': [
+                instancetype,
             ]
         },
     ],
