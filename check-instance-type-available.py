@@ -51,7 +51,7 @@ response = ec2.describe_instance_type_offerings(
     ],
 )
 
-# Conver the DICT to a LIST
+# Extract the DICT to a LIST
 instanceofferings = response['InstanceTypeOfferings']
 
 # Populate a list to search. Because the filter in the describe_instance_type_offerings call
@@ -62,6 +62,6 @@ for i in instanceofferings:
         instancelist.append(i['InstanceType'])
 
 if instancetype in instancelist:
-    print('Yes')
+    print('Yes, ' + instancetype + ' is available in ' + az)
 else:
-    print('No')
+    print('Yes, ' + instancetype + ' is NOT available in ' + az)
