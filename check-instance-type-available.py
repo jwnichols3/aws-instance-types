@@ -43,7 +43,6 @@ ec2 = sess.client('ec2')
 # It looks like the AZ Location is not filtering the response, so the payload has a list of all AZs where the instance is available.
 # This results in a double filter later in the script.
 response = ec2.describe_instance_type_offerings(
-    DryRun=False,
     LocationType='availability-zone',
     Filters=[
         {
@@ -63,7 +62,7 @@ response = ec2.describe_instance_type_offerings(
 instanceofferings = response['InstanceTypeOfferings']
 
 # Populate a list to search. Because the filter in the describe_instance_type_offerings call
-# Does not seem to work, a second logic check is required.
+# returns all AZs, a second logic check is required.
 instancelist = []
 for i in instanceofferings:
     if i['Location'] == az:
