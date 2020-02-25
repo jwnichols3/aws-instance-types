@@ -9,16 +9,14 @@ python check-instance-type-availability.py \
 
 Goal: Returns True if instance type is available
 
-TODO: parameterize the command inputs.
-TODO: variables in the Filter of describe_instance_type_offerings
-TODO: search the response for the correspond instance type.
+DONE: parameterize the command inputs.
+DONE: variables in the Filter of describe_instance_type_offerings
+DONE: search the response for the correspond instance type.
+TODO: check for environment variable, re default region if region is not provided
 """
 from boto3 import Session
 from botocore.exceptions import ClientError
 import argparse
-
-sess = Session(profile_name='default', region_name='us-east-1')
-ec2 = sess.client('ec2')
 
 parser = argparse.ArgumentParser(prog='PROG',
                                  description='Return true or false if an instance type is available in a specific availability zone')
@@ -26,11 +24,20 @@ parser.add_argument('--az', default='us-east-1a',
                     help='Specific availability zone')
 parser.add_argument('--instancetype', '-i', default='t2.micro',
                     help='Specific instance type, e.g. t2.micro')
+parser.add_argument('--region', '-r', default='us-east-1',
+                    help='The AWS region, e.g. us-east-1')
 parser.add_argument('--profile', '-p', help='AWS Profile name')
 
 args = parser.parse_args()
 az = args.az
 instancetype = args.instancetype
+region = args.region
+
+if not (region):
+    region = 'us-east-1'
+
+sess = Session(profile_name='default', region_name=region)
+ec2 = sess.client('ec2')
 
 # It looks like the AZ Location is not filtering the response, so the payload has a list of all AZs where the instance is available.
 # This results in a double filter later in the script.
