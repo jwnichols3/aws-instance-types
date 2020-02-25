@@ -64,4 +64,4 @@ for i in instanceofferings:
 if instancetype in instancelist:
     print('Yes, ' + instancetype + ' is available in ' + az)
 else:
-    print('Yes, ' + instancetype + ' is NOT available in ' + az)
+    print('No, ' + instancetype + ' is NOT available in ' + az)
