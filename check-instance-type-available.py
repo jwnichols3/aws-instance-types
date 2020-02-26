@@ -1,13 +1,14 @@
 """ 
-check-instance-type-availability.py --instance-type instance_type --az availability_zone --profile profile_name  
+check-instance-type-availability.py --instance-type instance_type --region region_name --az availability_zone --profile profile_name  
 
 example
 python check-instance-type-availability.py \
     --instance-type t3.micro \
+    --region us-east-1 \
     --az us-east-1d \
     --profile default  
 
-Goal: Returns True if instance type is available
+Goal: Returns 0 if instance type is available, 1 if instance type not available, and 2 if command line error
 
 DONE: parameterize the command inputs.
 DONE: variables in the Filter of describe_instance_type_offerings
@@ -15,6 +16,7 @@ DONE: search the response for the correspond instance type.
 DONE: validate input against a valid set of regions and availability zones
 TODO: check for environment variable, re default region if region is not provided
 TODO: Add debug option with logging (https://docs.python.org/3/howto/logging.html)
+TODO: Add test suite using a framework like PyTest
 """
 from boto3 import Session
 from botocore.exceptions import ClientError
