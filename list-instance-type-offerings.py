@@ -127,11 +127,17 @@ def get_instance_list(instancetype, region):
 
 
 def list_intersection(lst1, lst2):
+    '''
+    list_intersection(list1, list2) returns a list with the common elements between the two lists
+    '''
     lst3 = [value for value in lst1 if value in lst2]
     return lst3
 
 
 def list_diff(li1, li2):
+    '''
+    list_diff(list1, list2) returns a list with the elements that are not in both lists
+    '''
     li_dif = [i for i in li1 + li2 if i not in li1 or i not in li2]
     return li_dif
 
@@ -149,10 +155,11 @@ if not check_region(region):
 # Get a list of AZs in REGION
 az_list = get_az_list(region)
 
-az_instance_list = get_instance_list(instancetype, region)
+# Get the list of AZs that have a defined instance type
+az_instancetype_list = get_instance_list(instancetype, region)
 
-instance_found = list_intersection(az_list, az_instance_list)
-instance_not_found = list_diff(az_list, az_instance_list)
+instance_found = list_intersection(az_list, az_instancetype_list)
+instance_not_found = list_diff(az_list, az_instancetype_list)
 
 print('The instance type ' + instancetype +
       ' is found in the following AZs in region ' + region + ':')
